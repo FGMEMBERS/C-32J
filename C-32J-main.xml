@@ -8,15 +8,19 @@
 			<path>/sim/model/cabin-visible</path>
 		</aircraft-data>
 		<tags>
-          	    <tag>transport</tag>
-      		    <tag>boeing</tag>
-      		    <tag>jet</tag>
-      		    <tag>twin-engine</tag>
-      		    <tag>retractable-gear</tag>
-      		    <tag>etops</tag>
-      		    <tag>glass-cockpit</tag>
-      		    <tag>ifr</tag>
-      		</tags>
+			<tag>transport</tag>
+			<tag>boeing</tag>
+			<tag>jet</tag>
+			<tag>retractable-gear</tag>
+			<tag>glass-cockpit</tag>
+			<tag>ifr</tag>
+			<tag>2010s</tag>
+			<tag>2000s</tag>
+			<tag>1990s</tag>
+			<tag>1980s</tag>
+			<tag>etops</tag>
+			<tag>twin-engine</tag>
+		</tags>
         	<instrument-options>
         	    <canvas-popup-enable type="bool">true</canvas-popup-enable>
         	</instrument-options>
@@ -86,7 +90,9 @@
           	    <visibility-range-nm type="int">150</visibility-range-nm>
         	</multiplay>
  
-		<flight-recorder include="Systems/flight-recorder.xml"/> 
+		<flight-recorder include="Systems/flight-recorder.xml"/>
+
+		<gui n="0" include="gui/it-gui.xml"/>
 
 		<startup>
 			<splash-texture>Aircraft/C-32J/splash.png</splash-texture>
@@ -352,9 +358,9 @@
 				<name>IT-AUTOFLIGHT</name>
 				<path>Aircraft/C-32J/Systems/it-autoflight.xml</path>
 			</autopilot>
-			<!-- Uses a custom EPR based autothrottle -->
 			<autopilot n="2">
-				<path>Aircraft/C-32J/Systems/custom-autothrust.xml</path>
+				<name>IT-AUTOTHRUST</name>
+				<path>Aircraft/C-32J/Systems/it-autothrust.xml</path>
 			</autopilot>
 			<autopilot n="4">
 				<name>Autobrake</name>
@@ -399,8 +405,7 @@
 				<td>0.001</td>
 			</pitch>
 			<cmd>
-				<hdg>1.6</hdg>
-				<vorloc>2.6</vorloc>
+				<roll>1.6</roll>
 				<alt-gain>-5</alt-gain>
 			</cmd>
 			<autoland> 
@@ -409,16 +414,20 @@
 			</autoland>
 			<rollout>
 				<roll-kp>-0.1</roll-kp>
-				<pitch-defl>0.1</pitch-defl>
+				<pitch-nose>0.15</pitch-nose>
+				<pitch-rate>-1.5</pitch-rate>
 				<yaw-kp>-0.02</yaw-kp>
 			</rollout>
 		</config>
 		<settings>
 			<auto-bank-max-deg>25</auto-bank-max-deg> <!-- Maximum Auto Bank Limit -->
+			<autothrottle-max>0.95</autothrottle-max> <!-- Thrust Max Limit Normalized -->
+			<autothrottle-min>0.02</autothrottle-min> <!-- Thrust Low Limit Normalized -->
+			<custom-fma>0</custom-fma> <!-- Call functions when modes change for a custom FMA to be implemented --> 
 			<disable-final>0</disable-final> <!-- Disable the Final Controllers, for custom FCS integration -->
 			<land-enable>1</land-enable> <!-- Enable/Disable Autoland -->
 			<land-flap>0.667</land-flap> <!-- Minimum Flap used for Landing -->
-			<retard-ft>20</retard-ft> <!-- Enable Thrust Retard -->
+			<retard-ft>50</retard-ft> <!-- Enable Thrust Retard -->
 			<retard-enable>1</retard-enable> <!-- AGL to Thrust Retard -->
 			<togaspd>160</togaspd> <!-- V2 + 10kts -->
 			<lat-agl-ft>50</lat-agl-ft> <!-- AGL when LNAV becomes active if armed -->
@@ -431,7 +440,7 @@
 	</it-autoflight>
 
 <speeds>
-	<vmo>340</vmo>
+	<vmo>360</vmo>
 </speeds>
  
 	<modes>
@@ -712,6 +721,15 @@
 		</keyboard>
 	</input>
 
+	<b757>
+		<sound>
+			<thunder1 type="bool">false</thunder1>
+			<thunder2 type="bool">false</thunder2>
+			<thunder3 type="bool">false</thunder3>
+			<thunder4 type="bool">false</thunder4>
+		</sound>
+	</b757>
+
 	<nasal>
 		<Boeing757>
 			<file>Aircraft/C-32J/Nasal/wipers.nas</file>
@@ -766,6 +784,9 @@
 		<aar>
 	        <file>Aircraft/Generic/aar.nas</file>
 		</aar>
+		<thunder-effects>
+			<file>Aircraft/C-32J/Nasal/thunder-effects.nas</file>
+		</thunder-effects>
 	</nasal>
 
 	<aircraft>
@@ -830,7 +851,7 @@
         <max-gear-extension-speed>270</max-gear-extension-speed>
         <vne>600</vne>
         <max-positive-g>2.5</max-positive-g>
-        <max-negative-g>-1.76</max-negative-g>
+        <max-negative-g>-1.8</max-negative-g>
     </limits>
 
 </PropertyList>
